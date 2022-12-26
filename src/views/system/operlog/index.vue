@@ -73,7 +73,7 @@
                icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
-               v-hasPermi="['monitor:operlog:remove']"
+               v-hasPermi="['system:operlog:remove']"
             >删除</el-button>
          </el-col>
          <el-col :span="1.5">
@@ -82,7 +82,7 @@
                plain
                icon="Delete"
                @click="handleClean"
-               v-hasPermi="['monitor:operlog:remove']"
+               v-hasPermi="['system:operlog:remove']"
             >清空</el-button>
          </el-col>
          <el-col :span="1.5">
@@ -91,7 +91,7 @@
                plain
                icon="Download"
                @click="handleExport"
-               v-hasPermi="['monitor:operlog:export']"
+               v-hasPermi="['system:operlog:export']"
             >导出</el-button>
          </el-col>
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
@@ -119,12 +119,7 @@
          </el-table-column>
          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button
-                  type="text"
-                  icon="View"
-                  @click="handleView(scope.row, scope.index)"
-                  v-hasPermi="['monitor:operlog:query']"
-               >详细</el-button>
+               <el-button link type="primary" icon="View" @click="handleView(scope.row, scope.index)" v-hasPermi="['system:operlog:query']">详细</el-button>
             </template>
          </el-table-column>
       </el-table>
@@ -237,8 +232,8 @@ function handleQuery() {
 function resetQuery() {
   dateRange.value = [];
   proxy.resetForm("queryRef");
+  queryParams.value.pageNum = 1;
   proxy.$refs["operlogRef"].sort(defaultSort.value.prop, defaultSort.value.order);
-  handleQuery();
 }
 /** 多选框选中数据 */
 function handleSelectionChange(selection) {
